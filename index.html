@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base de Datos II</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+  <!-- LOGO + TITULO -->
+  <div class="logo">
+    <img src="images.png" >
+    <h1>Base de Datos II</h1>
+  </div>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#sobre">Sobre mí</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+    <button onclick="login()">Área Privada</button>
+  </nav>
+</header>
+
+<!-- INICIO -->
+<section id="inicio" class="hero">
+  <div class="overlay">
+    <h2>Ingeniería de Sistemas y Computación aplicada</h2>
+    <p>Esta página web ha sido desarrollada como un espacio digital 
+        donde presento y organizo mis proyectos, trabajos académicos y avances 
+        del curso de Base de Datos II . Mi propósito
+        principal es compartir soluciones bien estructuradas, desarrolladas 
+        con enfoque técnico y aplicando buenas prácticas de programación, 
+        con el fin de que puedan servir como referencia, apoyo o guía para otras personas 
+        interesadas en el desarrollo de software.
+
+A través de este sitio web, busco no solo evidenciar mi crecimiento 
+profesional y académico, sino también aportar contenido útil y 
+de calidad que pueda ser aprovechado por estudiantes, compañeros
+ o cualquier persona que desee explorar y aprender a partir de 
+ proyectos reales. Asimismo, esta plataforma refleja mi compromiso 
+ con la mejora continua, la innovación y la aplicación práctica de 
+ conocimientos en entornos tecnológicos.</p>
+  </div>
+</section>
+
+<!-- SOBRE MI -->
+<section id="sobre" class="sobre">
+  <div class="overlay sobre-contenido">
+    
+    <img src="WhatsApp Image 2025-09-29 at 10.46.00 PM.jpeg" class="foto" alt="mi foto">
+
+    <div>
+      <h2>PHOL Canez Quispe</h2>
+      <p>Soy estudiante de Ingeniería de Sistemas y Computación, 
+        con formación en desarrollo de software y fundamentos de programación. 
+        Actualmente me especializo en tecnologías como Java y Maven,
+         aplicando principios de programación orientada a objetos, 
+         gestión de dependencias y buenas prácticas de desarrollo. 
+         Busco consolidar mis conocimientos mediante la implementación
+          de proyectos que me permitan desarrollar soluciones eficientes, 
+          escalables y alineadas a los estándares de la industria.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="seccion">
+  <h2>Proyectos</h2>
+
+
+  <h3>Proyectos de GitHub</h3>
+  <div id="repositorios" class="grid"></div>
+
+  <h3>Mis Proyectos</h3>
+  <div id="misProyectos" class="grid"></div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="seccion">
+  <h2>Contacto</h2>
+  <input placeholder="Correo">
+</section>
+
+<!-- PANEL PRIVADO -->
+<div id="admin">
+
+  <div class="panel-header">
+    <h2>Panel de Gestión</h2>
+    <button onclick="cerrar()">✖</button>
+  </div>
+
+  <div class="tabs">
+    <button onclick="mostrarTab('crear')">Crear</button>
+    <button onclick="mostrarTab('gestionar')">Gestionar</button>
+  </div>
+
+  <div id="crear" class="tab">
+    <input id="titulo" placeholder="Título">
+    <textarea id="desc" placeholder="Descripción"></textarea>
+    <input id="link" placeholder="Enlace">
+    <input type="file" id="archivo" accept=".pdf,.jpg,.png">
+    <button onclick="guardar()">Guardar</button>
+  </div>
+
+  <div id="gestionar" class="tab hidden">
+    <div id="listaAdmin"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
