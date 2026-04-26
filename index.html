@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base de Datos II - Phol Antoni</title>
+    <title>Base de Datos II - Portafolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,21 +18,20 @@
         <a href="#inicio">Inicio</a>
         <a href="#sobre">Sobre mí</a>
         <a href="#proyectos">Proyectos</a>
-        <button onclick="login()" style="background:#0ea5e9; padding:5px 10px; border-radius:5px; color:white; font-weight:bold; cursor:pointer; border:none;">Área Privada</button>
+        <button onclick="login()">Área Privada</button>
     </nav>
 </header>
 
 <section id="inicio" class="hero">
     <div class="overlay">
         <h2>Ingeniería de Sistemas y Computación</h2>
-        <p>Portafolio académico sincronizado en tiempo real. Todos los cambios se guardan automáticamente en la nube.</p>
+        <p>Portafolio global sincronizado en la nube para el curso de Base de Datos II.</p>
     </div>
 </section>
 
 <section id="proyectos" class="seccion">
     <h3 style="text-align: center; margin-bottom: 30px; color: white;">Mis Proyectos Académicos</h3>
-    <div id="misProyectos" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
-        </div>
+    <div id="misProyectos" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;"></div>
 </section>
 
 <div id="admin" class="modal-admin">
@@ -55,7 +54,7 @@
 
     <input id="titulo" class="admin-input" placeholder="Título de la tarea">
     <textarea id="desc" class="admin-input" placeholder="Descripción o apuntes..." style="height: 80px;"></textarea>
-    <input id="link" class="admin-input" placeholder="Enlace (Canva, Drive, etc.)">
+    <input id="link" class="admin-input" placeholder="Link (Canva, Drive, etc.)">
     
     <button onclick="guardar()" style="width: 100%; padding: 12px; background: #0ea5e9; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">GUARDAR EN LA NUBE</button>
 </div>
@@ -64,9 +63,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
 <script>
-    // PEGA AQUÍ TUS DATOS DE FIREBASE
+    // ESTA PARTE LA COPIAS DE TU CONSOLA DE FIREBASE
     const firebaseConfig = {
-        apiKey: "TU_API_KEY",
+        apiKey: "TU_API_KEY_AQUÍ",
         authDomain: "TU_PROYECTO.firebaseapp.com",
         databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
         projectId: "TU_PROYECTO",
