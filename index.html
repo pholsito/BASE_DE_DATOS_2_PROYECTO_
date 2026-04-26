@@ -69,30 +69,46 @@ de calidad que pueda ser aprovechado por estudiantes, compañeros
 </section>
 
 <section id="proyectos" class="seccion">
-  <h3>Mis Proyectos</h3>
+  <h3>Mis Proyectos Académicos</h3>
   
-  <div id="misProyectos" class="grid">
-    <div class="semana-contenedor" style="grid-column: 1 / -1; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-      <h4>Semana 1</h4>
-      <p id="info-semana-1">Aquí puedes escribir la información teórica de la semana 1.</p>
-      
-      <div style="display: flex; gap: 10px; justify-content: space-around; margin-top: 15px;">
-        <div class="tarea-item">
-          <h5>Tarea 1</h5>
-          <div id="archivo-s1-t1"></div>
-        </div>
-        <div class="tarea-item">
-          <h5>Tarea 2</h5>
-          <div id="archivo-s1-t2"></div>
-        </div>
-        <div class="tarea-item">
-          <h5>Tarea 3</h5>
-          <div id="archivo-s1-t3"></div>
-        </div>
-      </div>
-    </div>
+  <div id="misProyectos" class="grid-semanas" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
     
-    </div>
+    <script>
+      // Este pequeño script ayuda a visualizar las 16 semanas sin llenar el HTML de código repetitivo, 
+      // pero manteniendo tus clases.
+      const contenedor = document.currentScript.parentElement;
+      for (let i = 1; i <= 16; i++) {
+        const semanaDiv = document.createElement('div');
+        semanaDiv.className = 'semana-bloque';
+        semanaDiv.style.background = 'rgba(255, 255, 255, 0.05)';
+        semanaDiv.style.padding = '20px';
+        semanaDiv.style.borderRadius = '15px';
+        semanaDiv.style.border = '1px solid rgba(255,255,255,0.1)';
+        
+        semanaDiv.innerHTML = `
+          <h4 style="color: #fff; border-bottom: 2px solid #0056b3; display: inline-block;">Semana ${i}</h4>
+          <p id="info-semana-${i}" style="color: #ccc; margin: 10px 0;">Información y apuntes de la semana ${i}...</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div class="tarea-card" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+              <h5 style="color: #aaa;">Tarea 1</h5>
+              <div id="archivo-s${i}-t1"></div>
+            </div>
+            <div class="tarea-card" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+              <h5 style="color: #aaa;">Tarea 2</h5>
+              <div id="archivo-s${i}-t2"></div>
+            </div>
+            <div class="tarea-card" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+              <h5 style="color: #aaa;">Tarea 3</h5>
+              <div id="archivo-s${i}-t3"></div>
+            </div>
+          </div>
+        `;
+        contenedor.appendChild(semanaDiv);
+      }
+    </script>
+
+  </div>
 </section>
 
 <section id="contacto" class="seccion">
@@ -113,27 +129,31 @@ de calidad que pueda ser aprovechado por estudiantes, compañeros
   </div>
 
   <div id="crear" class="tab">
-    <select id="select-semana" style="width: 100%; margin-bottom: 10px; padding: 5px;">
-      <option value="1">Semana 1</option>
-      <option value="2">Semana 2</option>
-      <option value="3">Semana 3</option>
+    <label style="color: white;">Seleccionar Semana:</label>
+    <select id="select-semana" style="width: 100%; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
+      <script>
+        for (let i = 1; i <= 16; i++) {
+          document.write(`<option value="${i}">Semana ${i}</option>`);
+        }
+      </script>
     </select>
 
-    <select id="select-tarea" style="width: 100%; margin-bottom: 10px; padding: 5px;">
-      <option value="0">Info General de Semana</option>
+    <label style="color: white;">Tipo de contenido:</label>
+    <select id="select-tarea" style="width: 100%; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
+      <option value="0">Información de la Semana</option>
       <option value="1">Tarea 1</option>
       <option value="2">Tarea 2</option>
       <option value="3">Tarea 3</option>
     </select>
 
-    <input id="titulo" placeholder="Título o Link (Canva/Drive)">
-    <textarea id="desc" placeholder="Información de la semana o descripción de tarea"></textarea>
-    <input id="link" placeholder="Enlace adicional">
+    <input id="titulo" placeholder="Nombre de la Tarea o Título">
+    <textarea id="desc" placeholder="Escribe aquí la información teórica o descripción de la tarea..."></textarea>
+    <input id="link" placeholder="Enlace de Canva / Drive / GitHub">
     
-    <label style="color: white; font-size: 12px;">Subir Archivo:</label>
-    <input type="file" id="archivo" accept=".pdf,.jpg,.png,.sql,.zip">
+    <label style="color: white; font-size: 12px; display: block; margin-top: 10px;">Subir Archivo (.pdf, .sql, .zip):</label>
+    <input type="file" id="archivo" style="color: white; margin-bottom: 15px;">
     
-    <button onclick="guardar()">Guardar</button>
+    <button onclick="guardar()" style="width: 100%; padding: 10px; background: #0056b3; color: white; border: none; cursor: pointer;">Publicar en Portafolio</button>
   </div>
 
   <div id="gestionar" class="tab hidden">
