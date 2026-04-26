@@ -1,82 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base de Datos II - Portafolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base de Datos II - Portafolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="navbar">
-    <div class="logo">
-        <img src="images.png" alt="Logo">
-        <h1>Base de Datos II</h1>
-    </div>
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#sobre">Sobre mí</a>
-        <a href="#proyectos">Proyectos</a>
-        <button onclick="login()">Área Privada</button>
-    </nav>
+  <div class="logo">
+    <img src="images.png" alt="Logo">
+    <h1>Base de Datos II</h1>
+  </div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#sobre">Sobre mí</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+    <button onclick="login()">Área Privada</button>
+  </nav>
 </header>
 
 <section id="inicio" class="hero">
-    <div class="overlay">
-        <h2>Ingeniería de Sistemas y Computación</h2>
-        <p>Portafolio global sincronizado en la nube para el curso de Base de Datos II.</p>
+  <div class="overlay">
+    <h2>Ingeniería de Sistemas y Computación</h2>
+    <p>Espacio digital donde presento y organizo mis proyectos, trabajos académicos y avances del curso de Base de Datos II.</p>
+  </div>
+</section>
+
+<section id="sobre" class="sobre">
+  <div class="overlay sobre-contenido">
+    <img src="WhatsApp Image 2025-09-29 at 10.46.00 PM.jpeg" class="foto" alt="mi foto">
+    <div>
+      <h2>PhoL Antoni Canez Quispe</h2>
+      <p>Estudiante de Ingeniería de Sistemas y Computación...</p>
     </div>
+  </div>
 </section>
 
 <section id="proyectos" class="seccion">
-    <h3 style="text-align: center; margin-bottom: 30px; color: white;">Mis Proyectos Académicos</h3>
-    <div id="misProyectos" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;"></div>
+  <h3 style="text-align: center; margin-bottom: 20px;">Mis Proyectos Académicos</h3>
+  <div id="misProyectos" class="grid-semanas" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
+    </div>
 </section>
 
-<div id="admin" class="modal-admin">
-    <div class="panel-header">
-        <h2 style="color: white; margin: 0;">Panel de Gestión</h2>
-        <button onclick="cerrar()" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">✖</button>
-    </div>
+<section id="contacto" class="seccion">
+  <h2>Contacto</h2>
+  <div class="formulario">
+    <input placeholder="Correo electrónico">
+    <textarea placeholder="Mensaje"></textarea>
+    <button>Enviar</button>
+  </div>
+</section>
+
+<div id="admin" class="admin-panel">
+  <div class="panel-header">
+    <h2 style="color: white; margin: 0;">Panel de Gestión</h2>
+    <button onclick="cerrar()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">✖</button>
+  </div>
+
+  <div id="crear" class="tab">
     <label style="color: white; font-size: 12px;">Semana:</label>
     <select id="select-semana" class="admin-input"></select>
-    
+
     <label style="color: white; font-size: 12px;">¿Qué vas a subir?:</label>
     <select id="select-tarea" class="admin-input">
-        <option value="0">Información General</option>
-        <option value="1">Tarea 1</option>
-        <option value="2">Tarea 2</option>
-        <option value="3">Tarea 3</option>
-        <option value="4">Tarea 4</option>
-        <option value="5">Tarea 5</option>
+      <option value="0">Información General (Texto)</option>
+      <option value="1">Tarea 1</option>
+      <option value="2">Tarea 2</option>
+      <option value="3">Tarea 3</option>
+      <option value="4">Tarea 4</option>
+      <option value="5">Tarea 5</option>
     </select>
 
     <input id="titulo" class="admin-input" placeholder="Título de la tarea">
-    <textarea id="desc" class="admin-input" placeholder="Descripción o apuntes..." style="height: 80px;"></textarea>
-    <input id="link" class="admin-input" placeholder="Link (Canva, Drive, etc.)">
+    <textarea id="desc" class="admin-input" placeholder="Descripción o apuntes teóricos..." style="height: 80px;"></textarea>
+    <input id="link" class="admin-input" placeholder="Link (Canva, Drive, GitHub)">
     
-    <button onclick="guardar()" style="width: 100%; padding: 12px; background: #0ea5e9; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">GUARDAR EN LA NUBE</button>
+    <label style="color: white; font-size: 11px;">Opcional: Nombre del archivo</label>
+    <input type="file" id="archivo" style="color: white; margin-bottom: 15px; font-size: 12px;">
+    
+    <button onclick="guardar()" style="width: 100%; padding: 12px; margin-top: 10px;">GUARDAR CAMBIOS</button>
+  </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
-
-<script>
-    // ESTA PARTE LA COPIAS DE TU CONSOLA DE FIREBASE
-    const firebaseConfig = {
-        apiKey: "TU_API_KEY_AQUÍ",
-        authDomain: "TU_PROYECTO.firebaseapp.com",
-        databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
-        projectId: "TU_PROYECTO",
-        storageBucket: "TU_PROYECTO.appspot.com",
-        messagingSenderId: "...",
-        appId: "..."
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-</script>
 <script src="script.js"></script>
 </body>
+</html>
 </html>
