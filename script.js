@@ -1,219 +1,117 @@
 const PIN = "1234";
-let editando = null;
-let reposEditados = [];
 let adminActivo = false;
+
+// Inicializamos la base de datos local si no existe
+if (!localStorage.getItem("proyectos_upla")) {
+    localStorage.setItem("proyectos_upla", JSON.stringify({}));
+}
 
 // LOGIN
 function login(){
-  const p = prompt("Ingrese PIN:");
+  const p = prompt("Ingrese PIN de administrador:");
   if(p === PIN){
     adminActivo = true;
-    document.getElementById("admin").classList.add("activo");
-    mostrarAdmin();
-    mostrarGithubAdmin();
-    renderRepos();
-    mostrar();
+    document.getElementById("admin").style.display = "block";
+  } else {
+    alert("PIN Incorrecto");
   }
 }
 
 function cerrar(){
   adminActivo = false;
-  document.getElementById("admin").classList.remove("activo");
-  renderRepos();
-  mostrar();
+  document.getElementById("admin").style.display = "none";
 }
 
-// TABS
-function mostrarTab(tab){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.add("hidden"));
-  document.getElementById(tab).classList.remove("hidden");
-}
+// GENERAR SELECTORES Y SEMANAS AL CARGAR
+document.addEventListener("DOMContentLoaded", () => {
+    const selSemana = document.getElementById("select-semana");
+    const contenedor = document.getElementById("misProyectos");
 
-// ======================
-// MIS PROYECTOS
-// ======================
+    for (let i = 1; i <= 16; i++) {
+        // Llenar el selector del panel
+        let opt = document.createElement("option");
+        opt.value = i;
+        opt.innerText = "Semana " + i;
+        selSemana.appendChild(opt);
+    }
+    renderSemanas();
+});
 
+// GUARDAR DATOS
 function guardar(){
+  const semana = document.getElementById("select-semana").value;
+  const tipo = document.getElementById("select-tarea").value;
   const titulo = document.getElementById("titulo").value;
   const desc = document.getElementById("desc").value;
   const link = document.getElementById("link").value;
   const archivoInput = document.getElementById("archivo");
 
-  let data = JSON.parse(localStorage.getItem("proyectos")) || [];
+  let bd = JSON.parse(localStorage.getItem("proyectos_upla"));
 
-  let archivoURL = "";
-  if(archivoInput.files.length > 0){
-    archivoURL = URL.createObjectURL(archivoInput.files[0]);
+  // Aseguramos que la semana exista en el objeto
+  if (!bd[semana]) {
+      bd[semana] = { info: "Escribe aquí la información teórica...", tareas: {} };
   }
 
-  if(editando !== null){
-    data[editando] = {titulo, desc, link, archivo: archivoURL};
-    editando = null;
+  if (tipo === "0") {
+      // Guardar información de la semana
+      bd[semana].info = desc;
   } else {
-    data.push({titulo, desc, link, archivo: archivoURL});
+      // Guardar tarea específica (1 al 5)
+      bd[semana].tareas[tipo] = {
+          titulo: titulo,
+          enlace: link,
+          archivo: archivoInput.files.length > 0 ? archivoInput.files[0].name : null
+      };
   }
 
-  localStorage.setItem("proyectos", JSON.stringify(data));
-
+  localStorage.setItem("proyectos_upla", JSON.stringify(bd));
+  alert("¡Cambios guardados con éxito!");
+  
   limpiar();
-  mostrar();
-  mostrarAdmin();
+  renderSemanas();
 }
 
-// MOSTRAR PUBLICO
-function mostrar(){
-  const cont = document.getElementById("misProyectos");
-  cont.innerHTML = "";
+// DIBUJAR LAS SEMANAS EN LA PANTALLA
+function renderSemanas() {
+    const cont = document.getElementById("misProyectos");
+    cont.innerHTML = "";
+    let bd = JSON.parse(localStorage.getItem("proyectos_upla"));
 
-  let data = JSON.parse(localStorage.getItem("proyectos")) || [];
+    for (let i = 1; i <= 16; i++) {
+        const data = bd[i] || { info: "Semana sin información cargada.", tareas: {} };
+        const divSemana = document.createElement("div");
+        divSemana.style = "background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);";
+        
+        let tareasHTML = "";
+        for (let j = 1; j <= 5; j++) {
+            const t = data.tareas[j];
+            tareasHTML += `
+                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                    <h5 style="color: #666; margin-bottom:5px;">Tarea ${j}</h5>
+                    ${t ? `
+                        <p style="font-size:11px; color:white; margin:0;">${t.titulo}</p>
+                        ${t.enlace ? `<a href="${t.enlace}" target="_blank" style="color:#0056b3; font-size:10px; text-decoration:none;">🔗 Ver Link</a>` : ""}
+                        ${t.archivo ? `<br><small style="color:gray; font-size:9px;">📁 ${t.archivo}</small>` : ""}
+                    ` : `<small style="color:#333;">Vacío</small>`}
+                </div>
+            `;
+        }
 
-  data.forEach((p,i)=>{
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.desc}</p>
-
-      ${p.link ? `<a href="${p.link}" target="_blank">🔗 Abrir enlace</a>` : ""}
-      ${p.archivo ? renderArchivo(p.archivo) : ""}
-
-      ${adminActivo ? `
-        <br><br>
-        <button onclick="editar(${i})">Editar</button>
-        <button onclick="eliminar(${i})">Eliminar</button>
-      ` : ""}
-    `;
-
-    cont.appendChild(div);
-  });
-}
-
-// ARCHIVOS
-function renderArchivo(url){
-  if(url.endsWith(".pdf")){
-    return `<br><a href="${url}" target="_blank">📄 Ver PDF</a>`;
-  }
-  if(url.match(/\.(jpg|jpeg|png|gif)$/)){
-    return `<br><img src="${url}" style="width:100%; border-radius:10px; margin-top:10px;">`;
-  }
-  return `<br><a href="${url}" target="_blank">📁 Abrir archivo</a>`;
-}
-
-// ADMIN PANEL
-function mostrarAdmin(){
-  const cont = document.getElementById("listaAdmin");
-  cont.innerHTML = "";
-
-  let data = JSON.parse(localStorage.getItem("proyectos")) || [];
-
-  data.forEach((p,i)=>{
-    const div = document.createElement("div");
-
-    div.innerHTML = `
-      <b>${p.titulo}</b><br>
-      <button onclick="editar(${i})">Editar</button>
-      <button onclick="eliminar(${i})">Eliminar</button>
-    `;
-
-    cont.appendChild(div);
-  });
-}
-
-function editar(i){
-  let data = JSON.parse(localStorage.getItem("proyectos"));
-
-  document.getElementById("titulo").value = data[i].titulo;
-  document.getElementById("desc").value = data[i].desc;
-  document.getElementById("link").value = data[i].link;
-
-  editando = i;
-  mostrarTab('crear');
-}
-
-function eliminar(i){
-  let data = JSON.parse(localStorage.getItem("proyectos"));
-  data.splice(i,1);
-  localStorage.setItem("proyectos", JSON.stringify(data));
-  mostrar();
-  mostrarAdmin();
+        divSemana.innerHTML = `
+            <h4 style="color: #fff; border-bottom: 2px solid #0056b3; display: inline-block; margin-bottom:10px;">Semana ${i}</h4>
+            <p style="color: #ccc; font-size:14px; margin-bottom:15px;">${data.info}</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+                ${tareasHTML}
+            </div>
+        `;
+        cont.appendChild(divSemana);
+    }
 }
 
 function limpiar(){
   document.getElementById("titulo").value = "";
   document.getElementById("desc").value = "";
   document.getElementById("link").value = "";
+  document.getElementById("archivo").value = "";
 }
-
-// ======================
-// GITHUB
-// ======================
-
-fetch("https://api.github.com/users/octocat/repos")
-.then(res=>res.json())
-.then(data=>{
-  reposEditados = data;
-  renderRepos();
-});
-
-function renderRepos(){
-  const cont = document.getElementById("repositorios");
-  cont.innerHTML = "";
-
-  reposEditados.forEach((repo,i)=>{
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <h3>${repo.name}</h3>
-      <p>${repo.description || ""}</p>
-      <a href="${repo.html_url}" target="_blank">🔗 Abrir</a>
-
-      ${adminActivo ? `
-        <br><br>
-        <button onclick="editarRepo(${i})">Editar</button>
-        <button onclick="eliminarRepo(${i})">Eliminar</button>
-      ` : ""}
-    `;
-
-    cont.appendChild(div);
-  });
-}
-
-// ADMIN GITHUB
-function mostrarGithubAdmin(){
-  const cont = document.getElementById("listaGithub");
-  if(!cont) return;
-
-  cont.innerHTML = "";
-
-  reposEditados.forEach((repo,i)=>{
-    const div = document.createElement("div");
-
-    div.innerHTML = `
-      <b>${repo.name}</b>
-      <button onclick="editarRepo(${i})">Editar</button>
-      <button onclick="eliminarRepo(${i})">Eliminar</button>
-    `;
-
-    cont.appendChild(div);
-  });
-}
-
-function editarRepo(i){
-  const nuevo = prompt("Nuevo nombre:", reposEditados[i].name);
-  if(nuevo){
-    reposEditados[i].name = nuevo;
-    renderRepos();
-    mostrarGithubAdmin();
-  }
-}
-
-function eliminarRepo(i){
-  reposEditados.splice(i,1);
-  renderRepos();
-  mostrarGithubAdmin();
-}
-
-// INICIO
-mostrar();
