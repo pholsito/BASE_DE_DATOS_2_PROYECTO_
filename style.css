@@ -129,3 +129,8 @@ button:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(14, 189, 248,
 
 .seccion { padding: 100px 40px; }
 .seccion { padding: 100px 40px; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(
