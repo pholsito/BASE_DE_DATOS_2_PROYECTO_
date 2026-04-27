@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Base de Datos II - Portafolio</title>
+<title>Base de Datos II - Phol Antoni</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -19,7 +19,7 @@
     <a href="#sobre">Sobre mí</a>
     <a href="#proyectos">Proyectos</a>
     <a href="#contacto">Contacto</a>
-    <button onclick="login()">Área Privada</button>
+    <button onclick="login()" style="background:#0ea5e9; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">Área Privada</button>
   </nav>
 </header>
 
@@ -41,13 +41,13 @@
 </section>
 
 <section id="proyectos" class="seccion">
-  <h3 style="text-align: center; margin-bottom: 20px;">Mis Proyectos Académicos</h3>
+  <h3 style="text-align: center; margin-bottom: 20px; color: white;">Mis Proyectos Académicos</h3>
   <div id="misProyectos" class="grid-semanas" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
     </div>
 </section>
 
 <section id="contacto" class="seccion">
-  <h2>Contacto</h2>
+  <h2 style="text-align: center; color: white;">Contacto</h2>
   <div class="formulario">
     <input placeholder="Correo electrónico">
     <textarea placeholder="Mensaje"></textarea>
@@ -55,38 +55,52 @@
   </div>
 </section>
 
-<div id="admin" class="admin-panel">
-  <div class="panel-header">
-    <h2 style="color: white; margin: 0;">Panel de Gestión</h2>
+<div id="admin" class="admin-panel" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#074972; padding:25px; border-radius:15px; z-index:2000; width:90%; max-width:400px; border:2px solid #38bdf8;">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+    <h2 style="color: white; margin: 0; font-size: 18px;">Gestión de Tareas</h2>
     <button onclick="cerrar()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">✖</button>
   </div>
 
-  <div id="crear" class="tab">
-    <label style="color: white; font-size: 12px;">Semana:</label>
-    <select id="select-semana" class="admin-input"></select>
+  <label style="color: white; font-size: 12px;">Semana:</label>
+  <select id="select-semana" class="admin-input" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px;"></select>
 
-    <label style="color: white; font-size: 12px;">¿Qué vas a subir?:</label>
-    <select id="select-tarea" class="admin-input">
-      <option value="0">Información General (Texto)</option>
-      <option value="1">Tarea 1</option>
-      <option value="2">Tarea 2</option>
-      <option value="3">Tarea 3</option>
-      <option value="4">Tarea 4</option>
-      <option value="5">Tarea 5</option>
-    </select>
+  <label style="color: white; font-size: 12px;">Contenido:</label>
+  <select id="select-tarea" class="admin-input" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px;">
+    <option value="0">Información General (Texto)</option>
+    <option value="1">Tarea 1</option>
+    <option value="2">Tarea 2</option>
+    <option value="3">Tarea 3</option>
+    <option value="4">Tarea 4</option>
+    <option value="5">Tarea 5</option>
+  </select>
 
-    <input id="titulo" class="admin-input" placeholder="Título de la tarea">
-    <textarea id="desc" class="admin-input" placeholder="Descripción o apuntes teóricos..." style="height: 80px;"></textarea>
-    <input id="link" class="admin-input" placeholder="Link (Canva, Drive, GitHub)">
-    
-    <label style="color: white; font-size: 11px;">Opcional: Nombre del archivo</label>
-    <input type="file" id="archivo" style="color: white; margin-bottom: 15px; font-size: 12px;">
-    
-    <button onclick="guardar()" style="width: 100%; padding: 12px; margin-top: 10px;">GUARDAR CAMBIOS</button>
-  </div>
+  <input id="titulo" class="admin-input" placeholder="Título de la tarea" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px;">
+  <textarea id="desc" class="admin-input" placeholder="Descripción teórica..." style="width:100%; height:80px; margin-bottom:10px; padding:8px; border-radius:5px;"></textarea>
+  <input id="link" class="admin-input" placeholder="Link de Drive o Canva" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px;">
+  
+  <button onclick="guardar()" style="width:100%; padding:12px; background:#0ea5e9; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">GUARDAR EN LA NUBE</button>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+
+<script>
+  // === REEMPLAZA ESTO CON TUS DATOS DE FIREBASE ===
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROYECTO.firebaseapp.com",
+    databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
+    projectId: "TU_PROYECTO",
+    storageBucket: "TU_PROYECTO.appspot.com",
+    messagingSenderId: "...",
+    appId: "..."
+  };
+  // ===============================================
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
 
 <script src="script.js"></script>
 </body>
-</html>
 </html>
