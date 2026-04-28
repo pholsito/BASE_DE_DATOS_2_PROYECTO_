@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base de Datos II | Portafolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Base de Datos II | Portafolio Académico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,75 +24,71 @@
 </header>
 
 <section id="inicio" class="hero">
-    <div class="overlay">
+    <div class="overlay-hero">
         <h2>Ingeniería de Sistemas y Computación</h2>
-        <p>Esta página web presenta mis proyectos académicos y avances del curso de Base de Datos II, aplicando soluciones técnicas estructuradas y buenas prácticas de programación.</p>
+        <p>Presentación de proyectos académicos y soluciones técnicas avanzadas en gestión de datos.</p>
+        <a href="#proyectos" class="btn-scroll">Ver Portafolio</a>
     </div>
 </section>
 
 <section id="sobre" class="sobre">
-    <div class="overlay sobre-contenido">
-        <img src="WhatsApp Image 2025-09-29 at 10.46.00 PM.jpeg" class="foto" alt="Foto de Phol Antoni">
-        <div>
+    <div class="sobre-card">
+        <img src="WhatsApp Image 2025-09-29 at 10.46.00 PM.jpeg" class="foto" alt="Phol Antoni">
+        <div class="sobre-texto">
             <h2>Phol Antoni Canez Quispe</h2>
-            <p>Estudiante de Ingeniería de Sistemas y Computación comprometido con el desarrollo de soluciones tecnológicas eficientes.</p>
+            <h3>Estudiante de Ingeniería</h3>
+            <p>Comprometido con el desarrollo de soluciones tecnológicas eficientes, especializado en arquitectura de bases de datos y desarrollo de software.</p>
         </div>
     </div>
 </section>
 
 <section id="proyectos" class="seccion">
-    <h3>Mis Proyectos Académicos</h3>
-    <div id="misProyectos" class="grid-semanas" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
+    <div class="titulo-seccion">
+        <h3>Repositorio de Semanas</h3>
+        <p>Avances del semestre académico 2026-I</p>
+    </div>
+    <div id="misProyectos" class="grid-container">
         </div>
 </section>
 
-<section id="contacto" class="seccion">
+<section id="contacto" class="seccion-contacto">
     <h2>Contacto</h2>
-    <div class="form-contacto">
+    <div class="formulario">
         <input type="email" id="correo-contacto" placeholder="Tu Correo Electrónico">
-        <button class="btn-enviar">Enviar</button>
+        <textarea placeholder="Mensaje..."></textarea>
+        <button class="btn-enviar">Enviar Mensaje</button>
     </div>
 </section>
 
-<div id="admin" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1a1a1a; padding:25px; border-radius:15px; border:2px solid #0056b3; z-index:1000; width:90%; max-width:400px; overflow-y:auto; max-height:90vh; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-    <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 style="color:white; margin:0; font-size: 1.2rem;">Panel de Gestión</h2>
-        <button onclick="cerrar()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">✖</button>
+<div id="admin" class="modal-admin">
+    <div class="panel-header">
+        <h2>Panel de Gestión</h2>
+        <button onclick="cerrar()" class="btn-cerrar">✖</button>
     </div>
 
-    <div id="crear" class="tab">
-        <label style="color: white; font-size:12px;">Semana:</label>
-        <select id="select-semana" style="width: 100%; margin-bottom: 10px; padding: 8px; background:#333; color:white; border-radius:5px; border:1px solid #444;">
-            <option value="1">Semana 1</option>
-            <option value="2">Semana 2</option>
-            </select>
+    <div class="tab">
+        <label>Seleccionar Semana:</label>
+        <select id="select-semana"></select>
 
-        <label style="color: white; font-size:12px;">¿Qué vas a subir?:</label>
-        <select id="select-tarea" style="width: 100%; margin-bottom: 10px; padding: 8px; background:#333; color:white; border-radius:5px; border:1px solid #444;">
-            <option value="0">Información General (Texto)</option>
+        <label>Categoría:</label>
+        <select id="select-tarea">
+            <option value="0">Información Teórica (Texto)</option>
             <option value="1">Tarea 1</option>
             <option value="2">Tarea 2</option>
             <option value="3">Tarea 3</option>
         </select>
 
-        <input id="titulo" placeholder="Título de la tarea" style="width:100%; padding:8px; margin-bottom:10px; background:#333; color:white; border:none; border-radius:5px; box-sizing: border-box;">
-        <textarea id="desc" placeholder="Descripción..." style="width:100%; padding:8px; margin-bottom:10px; background:#333; color:white; border:none; border-radius:5px; height:60px; box-sizing: border-box;"></textarea>
-        <input id="link" placeholder="Link (Canva, Drive, etc.)" style="width:100%; padding:8px; margin-bottom:10px; background:#333; color:white; border:none; border-radius:5px; box-sizing: border-box;">
+        <input id="titulo" placeholder="Título de la tarea">
+        <textarea id="desc" placeholder="Descripción o contenido teórico..."></textarea>
+        <input id="link" placeholder="Link de recurso (Canva, Drive, GitHub)">
         
-        <label style="color: white; font-size: 11px;">Subir archivo:</label>
-        <input type="file" id="archivo" style="color: white; margin-bottom: 15px; font-size:12px; display: block; margin-top: 5px;">
+        <label>Archivo adjunto:</label>
+        <input type="file" id="archivo">
         
-        <button onclick="guardar()" style="width: 100%; padding: 12px; background: #0056b3; color: white; border: none; cursor: pointer; border-radius:5px; font-weight:bold; transition: 0.3s;">
-            GUARDAR EN PORTAFOLIO
-        </button>
+        <button onclick="guardar()" class="btn-guardar">GUARDAR CAMBIOS</button>
     </div>
 </div>
 
-<script>
-    // Funciones básicas para que la interfaz no falle
-    function login() {
-        document.getElementById('admin').style.display = 'block';
-    }
-
-    function cerrar() {
-        document.getElementById('
+<script src="script.js"></script>
+</body>
+</html>
